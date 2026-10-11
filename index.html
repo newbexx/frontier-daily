@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#E8ECED">
+<meta name="description" content="前沿简报：AI 每天挑出最多 15 篇值得读的前沿新闻，覆盖十类主题。每天北京时间 08:00 更新，支持分类、搜索和跨刊收藏。">
+<title>前沿简报 · 国内外自用版</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%232f4938'/%3E%3Cpath d='M16 44V20h32M16 32h24M28 44V32' fill='none' stroke='%23dbea9c' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css"><script src="data/latest.js" defer></script><script src="reader.js" defer></script><script src="share.js" defer></script><script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#news">跳到资讯列表</a>
+<header class="site-header"><div class="header-inner">
+<a class="brand" href="#" aria-label="前沿简报首页">前沿简报</a><time id="today-date"></time>
+<nav class="header-right" aria-label="个人记录"><button id="learning-nav" class="header-save" type="button"><span>我的学习</span><b id="learning-count" hidden></b></button><button id="saved-nav" class="header-save" type="button" aria-pressed="false"><span>收藏</span><b id="saved-count">0</b></button></nav>
+</div></header>
+<main class="page-shell">
+<section class="masthead" aria-labelledby="hero-title"><h1 id="hero-title">今天 0 条。</h1>
+<nav id="evidence-strip" class="evidence-strip" aria-label="按本刊排序跳到新闻"></nav>
+<div class="evidence-legend"><span class="tier-solid">证据扎实：人体临床、实测或观测</span><span class="tier-early">还在初步阶段：动物或细胞、计算或模拟、新方法</span><span class="tier-claim">只是说法：厂商宣称、计划</span></div>
+<div id="update-notice" class="edition-status" role="status"><span id="edition-label"></span><span id="update-label">载入中</span><span id="update-time"></span><span id="update-copy">正在载入简报…</span><button id="reload-edition" type="button">现在检查更新</button></div>
+<p class="ai-disclosure">每条新闻下的一句话和点评由 AI 根据来源摘录整理，可以展开「看来源原文摘录」对照。</p>
+</section>
+<div class="content-layout"><section class="feed" id="news" aria-label="新闻列表">
+<div class="feed-toolbar"><div class="toolbar-row"><label class="search-box"><input id="search" type="search" placeholder="搜索标题、内容或来源" aria-label="搜索资讯" autocomplete="off"></label><select id="date-filter" aria-label="筛选新闻日期"><option value="edition">本刊</option></select><select id="region-filter" aria-label="筛选新闻来源"><option value="all">国内与海外</option><option value="domestic">国内来源</option><option value="overseas">海外来源</option></select></div>
+<div id="topic-chips" class="topic-chips" role="group" aria-label="按主题筛选"></div>
+<select id="topic-filter" aria-label="筛选新闻主题" hidden><option value="全部">全部主题</option><option value="AI">人工智能</option><option value="芯片">芯片与算力</option><option value="机器人">机器人</option><option value="航天">航天</option><option value="生命科学">生命科学</option><option value="医疗健康">医疗健康</option><option value="新能源">新能源</option><option value="气候环境">气候环境</option><option value="量子科技">量子科技</option><option value="网络安全">网络安全</option></select>
+<div class="feed-caption"><span id="filter-context"></span><button id="clear-filters" type="button" hidden>重置筛选</button></div></div>
+<div class="feed-heading"><h2 id="feed-title">本刊精选<span id="result-count">0</span></h2></div>
+<div id="active-view" class="active-view" hidden><span id="active-view-copy"></span><button id="back-all" type="button">返回本刊</button></div>
+<div id="articles" class="article-list" aria-live="polite"></div><div id="empty-state" class="empty-state" hidden><h3 id="empty-title">没有符合条件的新闻</h3><p id="empty-copy"></p><button id="reset-filters" type="button">清除筛选</button></div><div id="list-end" class="list-end" hidden>本页新闻已全部列出</div></section>
+<aside class="sidebar" aria-label="阅读与分享">
+<section class="continue-learning"><h3>接着学</h3><p id="continue-status" role="status">正在读取学习记录…</p><ol id="continue-list"></ol></section>
+<section class="reading-progress"><h3>今天读了 <span id="read-fraction">0</span> 条</h3><div class="progress-track" role="progressbar" aria-label="本刊原文阅读进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-fill"></div></div><p id="progress-copy">打开一条原文开始阅读。</p><button id="reset-reading" type="button">重置进度</button></section>
+<section class="sidebar-notes"><h3>笔记 <span id="sidebar-note-count" hidden></span></h3><p id="sidebar-note-copy">正在读取笔记…</p><button id="sidebar-learning" class="side-link" type="button">打开我的学习</button></section>
+<section class="sidebar-share"><h3>做分享卡片</h3><p>选 1–6 条新闻，生成带来源的图卡和配文。</p><button id="studio-start" class="side-link" type="button">开始选新闻</button></section>
+<details class="update-plan"><summary>来源状态</summary><ul id="sources-status" aria-label="来源连接状态"></ul></details>
+</aside></div>
+<footer class="footer"><a class="footer-brand" href="#">前沿简报</a><span>来源摘要，保留出处</span></footer>
+</main>
+<div id="selection-dock" class="selection-dock" hidden><div><strong>已选 <span id="selection-count">0</span> 条</strong><span id="selection-summary" class="reader-input-label">制作一组分享卡片</span></div><button id="clear-selection" type="button">清空</button><button id="create-cards" class="primary-button" type="button">生成卡片</button></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="learning-dialog" class="reader-dialog learning-dialog" aria-labelledby="learning-heading">
+  <div class="reader-header"><div><h2 id="learning-heading">我的学习</h2></div><button id="learning-close" type="button" aria-label="关闭我的学习">×</button></div>
+  <div class="reader-scroll">
+    <div class="learning-tabs" role="group" aria-label="学习记录分组"><button id="learning-conversations" class="reader-secondary" type="button" aria-pressed="true">对话</button><button id="learning-notes" class="reader-secondary" type="button" aria-pressed="false">笔记</button></div>
+    <div class="learning-filters"><label>主题<select id="learning-topic" aria-label="筛选学习主题"></select></label><label>搜索<input id="learning-search" type="search" placeholder="搜索标题或对话内容" aria-label="搜索学习记录"></label></div>
+    <p id="learning-status" class="reader-caption" role="status"></p><div id="learning-list" aria-live="polite"></div>
+    <textarea id="learning-copy-text" rows="6" readonly hidden aria-label="待复制笔记"></textarea>
+  </div>
+</dialog>
+<dialog id="note-dialog" class="reader-dialog note-dialog" aria-labelledby="note-heading">
+  <form id="note-form"><div class="reader-header"><div><h2 id="note-heading">收进笔记</h2></div><button id="note-close" type="button" aria-label="关闭收进笔记">×</button></div>
+    <div class="reader-scroll"><p id="note-source" class="reader-caption"></p><label class="reader-label" for="note-content">留下有用的部分，可以先删改</label><textarea id="note-content" rows="10" maxlength="100000" required></textarea><p id="note-status" class="reader-caption" role="status"></p><button id="note-save" class="reader-primary" type="submit">收进笔记</button></div>
+  </form>
+</dialog>
+<dialog id="reader-dialog" class="reader-dialog" aria-labelledby="reader-article-title">
+  <div class="reader-header"><div><span id="reader-heading" class="reader-input-label">问 AI</span><h2 id="reader-article-title" class="reader-article-title"></h2><div class="reader-header-tags"><span id="reader-evidence"></span><span id="reader-topic"></span><span id="reader-source"></span></div><p id="reader-storage-status" class="reader-caption" role="status">正在读取学习记录…</p></div><button id="reader-close" type="button" aria-label="关闭解读">×</button></div>
+  <div class="reader-scroll">
+    <details id="reader-tools" class="reader-extra reader-tools"><summary>原文、知识卡与连接设置</summary>
+      <details id="reader-knowledge" class="reader-extra"><summary>先看名词与基础知识（离线可用）</summary><p class="reader-caption">按标题和摘要匹配的通用知识，帮助理解概念，不代表这篇新闻的研究结论。</p><div id="reader-terms"></div><div id="reader-background"></div></details>
+      <details id="reader-source-details" class="reader-extra"><summary>读取或补充原文</summary>
+        <label class="reader-label" for="reader-url">原文网址</label><div class="reader-url-row"><input id="reader-url" type="url" placeholder="https://…" autocomplete="off" spellcheck="false"><button id="reader-fetch" class="reader-primary" type="button">读取原文</button></div>
+        <p id="reader-source-status" class="reader-caption" role="status">从零解读时会先读取原文；直接提问可先根据标题与摘要讨论。</p>
+        <label class="reader-label" for="reader-body">原文正文</label><textarea id="reader-body" rows="6" maxlength="10000" placeholder="可以粘贴正文或原文网址。已读取的正文会用于后续追问。"></textarea>
+      </details>
+      <p id="reader-connection" class="reader-caption">正在检查页内 AI 连接…</p>
+      <details id="reader-api-settings" class="reader-extra"><summary>切换到其他 API（可选）</summary><label class="reader-label"><input id="reader-custom-api" type="checkbox"> 使用下面填写的服务</label><p class="reader-caption">默认沿用本机已有连接。若切换服务，密钥仅保留在本页，刷新清空。调用费用由服务商计算。</p>
+        <label class="reader-label" for="reader-endpoint">API 服务地址</label><input id="reader-endpoint" type="url" value="https://api.deepseek.com" placeholder="https://你的服务地址/v1" autocomplete="off">
+        <label class="reader-label" for="reader-model">模型名称</label><input id="reader-model" value="deepseek-flash" maxlength="120" autocomplete="off">
+        <label class="reader-label" for="reader-key">API Key</label><input id="reader-key" type="password" autocomplete="off" placeholder="只保留在当前页面">
+      </details>
+      <details id="reader-prompt-details" class="reader-extra"><summary>查看提问 / 到其他 AI 继续</summary><textarea id="reader-prompt" rows="8" readonly aria-label="完整解读提问"></textarea><div class="reader-web-actions"><button type="button" id="reader-copy" class="reader-primary">复制完整提问</button><a href="https://www.doubao.com/chat/" target="_blank" rel="noopener noreferrer">豆包</a><a href="https://chat.deepseek.com/" target="_blank" rel="noopener noreferrer">DeepSeek</a></div><p id="reader-copy-status" class="reader-caption" role="status"></p></details>
+    </details>
+    <div id="reader-chat-empty" class="reader-chat-empty"><span class="reader-welcome-mark" aria-hidden="true">✧</span><h3>不懂的地方，随时问。</h3><p>我会从你熟悉的事物讲起，把背景、原理、目标、创新点和实际进展连起来。<br>可以先读懂整篇，也可以直接问一个词、一句话。</p><span>本机服务开启时，对话自动保存；喜欢的回答可以手动收进笔记。</span></div>
+    <div id="reader-chat" class="reader-chat" role="log" aria-label="与 AI 的阅读对话" aria-live="polite" aria-relevant="additions text"></div>
+    <button id="reader-copy-answer" class="reader-copy-chat" type="button" hidden>复制这篇的对话</button>
+    <p class="reader-evidence-note">回答参考标题、摘要与已补充的正文；当前进展以材料日期和证据为准。</p>
+  </div>
+  <form id="reader-composer" class="reader-composer">
+    <div class="reader-question-chips" aria-label="快捷提问"><button type="button" data-reader-question="能用一个生活中的例子，讲清楚这背后的本质原理吗？">打个生活比方</button><button type="button" data-reader-question="把这件事的来龙去脉和他们想解决的问题讲给小白听。">来龙去脉</button><button type="button" data-reader-question="这次具体有什么创新？请用白话比较以前怎么做、这次新在哪里、解决了什么旧问题、进步多大及有什么代价。区分作者宣称与证据支持的结论，材料不足就直说。">有什么创新</button><button type="button" data-reader-question="按这篇新闻提供的证据，目前到底处于什么水平，离真正应用还差什么？">现在到哪一步</button><button type="button" data-reader-question="再给我科普一个与这篇新闻有关的基础知识，讲得通俗一点。">再长点见识</button><button id="reader-overview" type="button" class="reader-secondary">从零讲懂这篇</button></div>
+    <label class="reader-input-label" for="reader-question">随时提问</label><textarea id="reader-question" rows="2" maxlength="1000" placeholder="哪里没懂，直接问。也可以继续问“为什么”或“再简单点”…" aria-describedby="reader-keyboard-hint" autofocus></textarea>
+    <div class="reader-composer-actions"><p id="reader-ai-status" class="reader-caption" role="status">输入问题，或选择上方快捷提问。</p><button id="reader-stop" class="reader-secondary" type="button" hidden>停止等待</button><button id="reader-send" class="reader-primary" type="submit">发送</button></div>
+    <p id="reader-keyboard-hint" class="reader-caption">Enter 发送，Shift+Enter 换行</p>
+  </form>
+</dialog>
+<dialog id="share-dialog" class="share-dialog" aria-labelledby="share-heading">
+<header class="share-header"><div><h2 id="share-heading">生成分享卡片</h2></div><button id="share-close" type="button" aria-label="关闭卡片制作">×</button></header>
+<div class="share-layout"><section class="share-preview" aria-label="信息卡片预览"><div class="share-canvas-wrap"><canvas id="share-canvas" width="1080" height="1440" aria-label="当前信息卡片预览"></canvas></div><div class="share-pagination"><button id="share-prev" type="button" aria-label="上一张卡片">←</button><span id="share-page-label">封面 1 / 2</span><button id="share-next" type="button" aria-label="下一张卡片">→</button></div><div class="share-preview-note"><span>1080 × 1440</span><span>PNG</span><span>封面 + 每条新闻一张</span></div></section>
+<section class="share-controls" aria-label="卡片内容与导出"><label class="share-field">这组卡片的标题<input id="share-title" maxlength="40" placeholder="今天，值得知道的几件事"></label><div class="share-field">卡片风格<div class="share-themes"><button type="button" data-share-theme="sage" aria-pressed="true"><i></i>纸感绿</button><button type="button" data-share-theme="night" aria-pressed="false"><i></i>午夜蓝</button></div></div><div class="share-section-title"><h3>选中的新闻</h3><span>可调整顺序</span></div><ol id="share-selected" class="share-selected"></ol>
+<details class="share-edit"><summary>修改当前新闻卡片的内容</summary><p id="share-edit-hint">切换到新闻卡片后，可调整标题和摘要。</p><label class="share-field">标题<input id="share-item-title" maxlength="100"></label><label class="share-field">摘要<textarea id="share-item-summary" maxlength="320" rows="5"></textarea></label></details>
+<div class="share-export"><button id="share-download-all" class="primary-button" type="button">下载整组图卡与视频资料 ZIP</button><button id="share-download-current" class="secondary-button" type="button">下载当前 PNG</button></div>
+<details class="share-text"><summary>小红书配文</summary><textarea id="share-caption" rows="9" aria-label="小红书分享配文"></textarea><button id="share-copy-caption" class="secondary-button" type="button">复制配文</button></details>
+<details class="share-text"><summary>交给 Claude Code 做介绍视频</summary><p>下载 ZIP，解压后把其中的「claude-video.md」交给 Claude Code。里面有新闻材料、口播稿、分镜和图卡文件说明。</p><textarea id="share-video" rows="9" readonly aria-label="视频制作提示词"></textarea><button id="share-copy-video" class="secondary-button" type="button">复制视频提示词</button></details>
+<p class="share-footnote">内容来自新闻摘要，可自行修改。原文中未提供的创新、效果或成熟度，不会在卡片中补写。</p><p id="share-status" class="share-status" role="status" aria-live="polite"></p>
+</section></div>
+</dialog>
+<noscript><div class="noscript">请启用 JavaScript 以筛选新闻和制作卡片。</div></noscript>
+</body></html>
